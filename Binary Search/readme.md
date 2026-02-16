@@ -133,3 +133,5 @@ Only pointer variables (`left`, `right`, `mid`) are used.
 # 🗣 Interview-Level Explanation
 
 “Since the array is sorted, I apply Binary Search. I maintain two pointers representing the current search space. At each step, I check the middle element and eliminate half of the array based on comparison with the target. This reduces time complexity to O(log n) while maintaining constant space usage.”
+
+
