@@ -1,57 +1,53 @@
-# 🧭 Two Pointer Pattern — Quick Notes
+# 🧭 Greedy Pattern — Quick Notes
 
 ---
 
-## 📌 When to Use Two Pointers?
+## 📌 What Is Greedy?
 
-Use the Two Pointer approach when:
+A Greedy algorithm makes the **best local decision at each step** hoping it leads to the **global optimal solution**.
 
-* You need to compare or operate on elements from **two positions** in an array/string.
-* The problem asks for **in-place modification**.
-* The array is **sorted** and involves removing duplicates or finding pairs.
-* You need to **reverse** or **check symmetry** (like palindrome).
-* You want to **avoid extra space** (O(1) space target).
+Key idea:
+
+* Never revisit past choices.
+* Decide optimally at the current step based on available information.
 
 Common clues in problem statements:
 
-* "In-place"
-* "Sorted array"
-* "Reverse"
-* "Remove duplicates"
-* "Compare from both ends"
+* "Maximize" / "Minimize"
+* "Choose best at each step"
+* "Buy before sell"
+* "Earliest finish time"
+* "Minimum number of operations"
 
 ---
 
-## 🧠 Types of Two Pointers
+## 🧩 Example: Best Time to Buy and Sell Stock
 
-1. **Same Direction** (Fast & Slow)
+Maintain:
 
-   * Remove duplicates
-   * Remove specific elements
-
-2. **Opposite Direction** (Start & End)
-
-   * Reverse string/array
-   * Palindrome check
-
----
-
-## 🧩 Example: Reverse String
-
-Given an array of characters, reverse it in-place.
+* Minimum price seen so far
+* Maximum profit possible
 
 ### 💻 Code
 
 ```js
-function reverseString(s) {
-  let left = 0;
-  let right = s.length - 1;
+function maxProfit(prices) {
+  let minPrice = prices[0];
+  let maxProfit = 0;
 
-  while (left < right) {
-    [s[left], s[right]] = [s[right], s[left]];
-    left++;
-    right--;
+  for (let i = 1; i < prices.length; i++) {
+    let profit = prices[i] - minPrice;
+
+    if (profit > maxProfit) {
+      maxProfit = profit;
+    }
+
+    if (prices[i] < minPrice) {
+      minPrice = prices[i];
+    }
   }
+
+  return maxProfit;
 }
 ```
 
@@ -67,4 +63,4 @@ O(1)
 
 ## 🗣 Interview Explanation
 
-“I use two pointers starting from both ends of the array and swap elements while moving inward. This reverses the array in-place using constant extra space.”
+“I maintain the minimum value seen so far and compute the best possible gain at each step. This greedy choice ensures the optimal profit in a single pass.”

@@ -1,57 +1,50 @@
-# 🧭 Two Pointer Pattern — Quick Notes
+# 🧭 Sliding Window Pattern — Quick Notes
 
 ---
 
-## 📌 When to Use Two Pointers?
+## 📌 When to Use Sliding Window?
 
-Use the Two Pointer approach when:
+Use Sliding Window when:
 
-* You need to compare or operate on elements from **two positions** in an array/string.
-* The problem asks for **in-place modification**.
-* The array is **sorted** and involves removing duplicates or finding pairs.
-* You need to **reverse** or **check symmetry** (like palindrome).
-* You want to **avoid extra space** (O(1) space target).
+* Problem involves **subarray / substring**.
+* Elements are **continuous**.
+* You need **max/min sum/length**.
+* Window size is **fixed** or **dynamic**.
+* You want to **avoid nested loops**.
 
 Common clues in problem statements:
 
-* "In-place"
-* "Sorted array"
-* "Reverse"
-* "Remove duplicates"
-* "Compare from both ends"
+* "Subarray of size k"
+* "Longest/Shortest substring"
+* "Continuous segment"
+* "Maximum/Minimum sum"
 
 ---
 
-## 🧠 Types of Two Pointers
+## 🧩 Example: Maximum Sum of Subarray of Size k
 
-1. **Same Direction** (Fast & Slow)
-
-   * Remove duplicates
-   * Remove specific elements
-
-2. **Opposite Direction** (Start & End)
-
-   * Reverse string/array
-   * Palindrome check
-
----
-
-## 🧩 Example: Reverse String
-
-Given an array of characters, reverse it in-place.
+Given an array and integer k, find the maximum sum of any contiguous subarray of size k.
 
 ### 💻 Code
 
 ```js
-function reverseString(s) {
-  let left = 0;
-  let right = s.length - 1;
+function maxSubarraySum(arr, k) {
+  let windowSum = 0;
 
-  while (left < right) {
-    [s[left], s[right]] = [s[right], s[left]];
-    left++;
-    right--;
+  for (let i = 0; i < k; i++) {
+    windowSum += arr[i];
   }
+
+  let maxSum = windowSum;
+
+  for (let i = k; i < arr.length; i++) {
+    windowSum = windowSum - arr[i - k] + arr[i];
+    if (windowSum > maxSum) {
+      maxSum = windowSum;
+    }
+  }
+
+  return maxSum;
 }
 ```
 
@@ -67,4 +60,4 @@ O(1)
 
 ## 🗣 Interview Explanation
 
-“I use two pointers starting from both ends of the array and swap elements while moving inward. This reverses the array in-place using constant extra space.”
+“I compute the first window sum and then slide the window by removing the outgoing element and adding the incoming element. This avoids recomputing sums and achieves linear time.”
